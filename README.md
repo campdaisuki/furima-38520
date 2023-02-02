@@ -52,8 +52,7 @@
 
 ### Association
 
-- belongs_to :user
-- has_one :purchase_history
+- belongs_to :purchase_history
 
 
 ## purchase_histories テーブル
@@ -67,3 +66,4 @@
 
 - has_one :destination
 - belongs_to :item
+- belongs_to :user
