@@ -17,8 +17,7 @@
 ### Association
 
 - has_many :items
-- has_one :destinations
-- has_one :purchase_historys
+- has_many :purchase_histories
 
 ## items テーブル
 
@@ -28,17 +27,16 @@
 | price                  | integer | null: false |
 | text                   | text | null: false |
 | category_id               | integer | null: false |
-| shipping_charges_id       | integer | null: false |
+| shipping_charge_id       | integer | null: false |
 | shipping_origin_region_id | integer | null: false |
 | prefecture_id         | integer | null: false |
 | days_to_ship_id           | integer | null: false |
 | user                   | references | null: false, foreign_key: true |
-| purchase_history       | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
-- has_one :purchase_historys
+- has_one :purchase_history
 
 ## destinations テーブル
 
@@ -50,15 +48,15 @@
 | address            | string | null: false |
 | building_name      | string |
 | phone_number       | string | null: false |
-| user               | references | null: false, foreign_key: true |
+| purchase_history   | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
-- has_one :purchase_historys
+- has_one :purchase_history
 
 
-## purchase_historys テーブル
+## purchase_histories テーブル
 
 | Column             | Type      | Options     |
 | ------------------ | --------- | ----------- |
@@ -67,6 +65,5 @@
 
 ### Association
 
-- belongs_to :destination
-- belongs_to :user
+- has_one :destination
 - belongs_to :item
