@@ -8,8 +8,16 @@ end
 describe "ユーザー新規登録" do
   context "新規登録できる場合" do
    it "nickname、email、password、password_confirmation、family_name、family_name_kana、first_name、first_name_kana、birth_dayが正しく登録されている場合" do
+    expect(@user).to be_valid
+   end
+
+   it "passwordとpassword_confirmationが6文字以上であれば登録できる" do
+    @user.password = "a12345"
+    @user.password_confirmation = "a12345"
+    expect(@user).to be_valid
+   end
   end
- end
+
 
   context "新規登録が出来ない場合" do
      it "nicknameが空だと登録できない" do
@@ -35,7 +43,7 @@ describe "ユーザー新規登録" do
      it "password_confirmationが空では登録できない" do
       @user.password_confirmation = ''
       @user.valid?
-      expect(@user.errors.full_messages).to include "Password is invalid"
+      expect(@user.errors.full_messages).to include "Password confirmation doesn't match Password"
      end
      it "family_nameが空では登録できない" do
       @user.family_name = ''
@@ -66,8 +74,8 @@ describe "ユーザー新規登録" do
       @user.save
       @user2 = FactoryBot.build(:user)
       @user2.email = @user.email
-      @user.valid?
-      expect(@user.errors.full_messages).to include "Password is invalid"
+      @user2.valid?
+      expect(@user2.errors.full_messages).to include "Email has already been taken"
      end
      it 'emailに@が含まれていない場合登録できない' do
       @user.email = "hogehuga.com"
@@ -75,7 +83,7 @@ describe "ユーザー新規登録" do
       expect(@user.errors.full_messages).to include "Email is invalid"
      end
      it "passwordが6文字未満では登録できない" do
-      @user.password = "123456"
+      @user.password = "12345"
       @user.valid?
       expect(@user.errors.full_messages).to include "Password is invalid"
      end
