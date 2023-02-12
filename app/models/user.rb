@@ -3,9 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   validates :nickname, presence: true, length: {maximum: 40}
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
-  validates :password,  format: { with: VALID_PASSWORD_REGEX }, confirmation: true
-  validates :family_name, presence: true, format: {with: /\A[ぁ-んァ-ヶ一-龥々ー]/ }
-  validates :first_name, presence: true, format: {with: /\A[ぁ-んァ-ヶ一-龥々ー]/ }
+  validates :password,  format: { with: VALID_PASSWORD_REGEX }
+  validates :family_name, presence: true, format: {with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/ }
+  validates :first_name, presence: true, format: {with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/ }
   validates :family_name_kana, presence: true, format: {with: /\A[ァ-ヶー－]+\z/ }
   validates :first_name_kana, presence: true, format: {with: /\A[ァ-ヶー－]+\z/ }
   validates :birth_day, presence: true
