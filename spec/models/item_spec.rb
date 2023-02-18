@@ -8,7 +8,7 @@ RSpec.describe Item, type: :model do
 
   describe "商品出品機能" do
     context "商品出品ができる時" do
-     it "name、text、price、category_id、shipping_charge_id、condition_id、prefecture_id、days_to_ship_idが正しく登録されている場合" do
+     it "image、name、text、price、category_id、shipping_charge_id、condition_id、prefecture_id、days_to_ship_idが正しく登録されている場合" do
       expect(@item).to be_valid
      end
     end
@@ -53,6 +53,21 @@ RSpec.describe Item, type: :model do
         @item.days_to_ship_id = ''
         @item.valid?
         expect(@item.errors.full_messages).to include "Days to ship can't be blank"
+      end
+      it 'imageが空では登録できないこと' do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Image can't be blank"
+      end
+      it '販売価格が¥300より少ない時は出品できないこと' do
+        @item.price = 299
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price must be greater than or equal to 300"
+      end
+      it '販売価格が¥9999999より多い時は出品できないこと' do
+        @item.price = 10_000_000
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price must be less than or equal to 9999999"
       end
     end
   end
