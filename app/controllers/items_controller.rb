@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!,except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :contributor_confirmation, only: [:edit]
 
 
   def index
@@ -23,6 +24,19 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def edit
+    @item = Item.find(params[:id])
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      redirect_to items_path
+    else
+      render :edit
+   end
+  end
+
   private
 
   def item_params
@@ -30,5 +44,8 @@ class ItemsController < ApplicationController
        :condition_id, :prefecture_id, :days_to_ship_id).merge(user_id: current_user.id)
   end
 
-
+  def contributor_confirmation
+    @item = Item.find(params[:id])
+    redirect_to root_path unless current_user == @item.user
+  end
 end
