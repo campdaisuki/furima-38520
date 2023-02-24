@@ -2,6 +2,8 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :contributor_confirmation, only: [:edit]
 
+ 
+
 
   def index
     @items = Item.order(created_at: :desc)
