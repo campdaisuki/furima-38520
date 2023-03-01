@@ -15,6 +15,7 @@ class User < ApplicationRecord
   validates :password,  format: { with: VALID_PASSWORD_REGEX }
 
   has_many :purchases
+  has_many :item
 
 
   devise :database_authenticatable, :registerable,
