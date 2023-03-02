@@ -1,3 +1,3 @@
 class Destination < ApplicationRecord
-  belongs_to :purchase, optional: true
+  belongs_to :purchase
 end
