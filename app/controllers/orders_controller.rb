@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!, only: :index
   before_action :prevent_url, only: [:index, :create]
   before_action :set_item, only: [:index, :create]
 
@@ -41,7 +41,7 @@ class OrdersController < ApplicationController
 
   def prevent_url
     @item = Item.find(params[:item_id])
-    if @item.user_id == current_user|| @item.purchase != nil
+    if @item.user_id == current_user.id|| @item.purchase != nil
       redirect_to root_path
     end
   end
